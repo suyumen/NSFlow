@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Python Stream Analysis Tool</title>
+    <title>Pacp Stream Analysis Tool</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.1.0/css/bootstrap.min.css" rel="stylesheet">
@@ -47,7 +47,9 @@
                                 </tr>
                                 <tr>
                                     <th>Protocol</th>
-                                    <td>{{ stream.protocol }}</td>
+                                    <td>
+                                        {{ stream.prname }}
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -73,7 +75,8 @@
                                             <tr>
                                                 <td>{{ pkt.time }}</td>
                                                 <td>{{ pkt[IP].len }}</td>
-                                                <td>{{pkt.load.decode(errors='ignore').replace('\n', '<br>')|safe if pkt.haslayer('Raw') else ''}}</td>
+                                                <td>{{pkt.load.decode(errors='ignore').replace('\n', '<br>')|safe if
+                                                    pkt.haslayer('Raw') else ''}}</td>
                                             </tr>
                                             {% endfor %}
                                         </tbody>
