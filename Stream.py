@@ -12,7 +12,7 @@ class Stream:
         self.protocol = pkt[IP].proto  # 协议id
         self.content = [pkt.load.decode(errors='ignore')] if pkt.haslayer(
             'Raw') else []  # 数据流内容列表
-        self.prnames = pkt[IP].payload.name
+        self.prname = pkt[IP].payload.name
 
     def update(self, pkt):  # 更新流
         self.pkts.append(pkt)
