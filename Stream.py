@@ -1,5 +1,4 @@
 from scapy.all import *
-# 数据流类
 
 
 class Stream:
@@ -28,25 +27,25 @@ def parse_pcap(file_name):
         if IP in pkt:  # 如果该包包含 IP 层信息
             proto = pkt[IP].proto  # 获取协议编号
             five_tuple = None
-            if proto in [1,6,17,33,46,132]:
-                if proto == 6:
+            if proto in [1, 6, 17, 33, 46, 132]:
+                if proto == 6:  # TCP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[TCP].sport, pkt[TCP].dport, proto)
-                elif proto == 17:
+                                  pkt[TCP].sport, pkt[TCP].dport, proto)
+                elif proto == 17:  # UDP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[UDP].sport, pkt[UDP].dport, proto)
-                elif proto == 33:
+                                  pkt[UDP].sport, pkt[UDP].dport, proto)
+                elif proto == 33:  # DCCP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[DCCP].sport, pkt[DCCP].dport, proto)
-                elif proto == 132:
+                                  pkt[DCCP].sport, pkt[DCCP].dport, proto)
+                elif proto == 132:  # SCTP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[SCTP].sport, pkt[SCTP].dport, proto)
-                elif proto == 1:
+                                  pkt[SCTP].sport, pkt[SCTP].dport, proto)
+                elif proto == 1:  # ICMP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[ICMP].type, pkt[ICMP].code, proto)
-                elif proto == 46:
+                                  pkt[ICMP].type, pkt[ICMP].code, proto)
+                elif proto == 46:  # RSVP
                     five_tuple = (pkt[IP].src, pkt[IP].dst,
-                                pkt[RSVP].port, pkt[RSVP].dport, proto)
+                                  pkt[RSVP].port, pkt[RSVP].dport, proto)
                 if five_tuple in streams:  # 如果该五元组已经存在于streams字典中
                     streams[five_tuple].update(pkt)  # 更新流
                 else:
